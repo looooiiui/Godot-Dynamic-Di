@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://bwqbcwn46lr"]
+
+[ext_resource type="Script" uid="uid://egcxfb477l01" path="res://02_Game/GameSystem/LoginSystem/login_group.gd" id="1_2j8vf"]
+[ext_resource type="Script" uid="uid://c6i5e7dx6nnvf" path="res://02_Game/GameSystem/LoginSystem/ButtonGroup/button_group.gd" id="1_5xwkx"]
+[ext_resource type="Script" uid="uid://bu221psf8wk83" path="res://02_Game/GameSystem/LoginSystem/WindowsGroup/login_group.gd" id="2_2j8vf"]
+[ext_resource type="Script" uid="uid://dy4v1l2t0e3iy" path="res://02_Game/GameSystem/LoginSystem/WindowsGroup/LoginWindow/login.gd" id="3_edt2w"]
+[ext_resource type="Script" uid="uid://swk6eekm08rm" path="res://02_Game/GameSystem/LoginSystem/WindowsGroup/LoginWindow/InputGroup/InformationInput/information_input.gd" id="4_vpxaa"]
+
+[node name="LoginSystem" type="Control" unique_id=92360582]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2j8vf")
+
+[node name="ButtonGroup" type="VBoxContainer" parent="." unique_id=1637573368 node_paths=PackedStringArray("Login_Window", "Login_Group")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -44.0
+offset_right = 74.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5xwkx")
+Login_Window = NodePath("../LoginGroup/Login")
+Login_Group = NodePath("../LoginGroup")
+
+[node name="Login" type="Button" parent="ButtonGroup" unique_id=88492511]
+layout_mode = 2
+text = "登录"
+
+[node name="Register" type="Button" parent="ButtonGroup" unique_id=1292030403]
+layout_mode = 2
+text = "注册"
+
+[node name="ExitGame" type="Button" parent="ButtonGroup" unique_id=1542190817]
+layout_mode = 2
+text = "退出"
+
+[node name="LoginGroup" type="Control" parent="." unique_id=1252555042 node_paths=PackedStringArray("Login_Windows", "Confirm_Button")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_2j8vf")
+Login_Windows = NodePath("Login")
+Confirm_Button = NodePath("Login/InputGroup/InformationInput/LoginBtn")
+
+[node name="Login" type="Window" parent="LoginGroup" unique_id=481372936]
+oversampling_override = 1.0
+title = "登录"
+initial_position = 1
+size = Vector2i(800, 400)
+script = ExtResource("3_edt2w")
+
+[node name="BackMainMenu" type="Button" parent="LoginGroup/Login" unique_id=2127691612]
+offset_right = 100.0
+offset_bottom = 8.0
+text = "退出"
+
+[node name="InputGroup" type="Control" parent="LoginGroup/Login" unique_id=770781989]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InformationInput" type="VBoxContainer" parent="LoginGroup/Login/InputGroup" unique_id=202264641 node_paths=PackedStringArray("Login_Group", "Account_Input", "Password_Input")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -79.0
+offset_right = 74.0
+offset_bottom = 79.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_vpxaa")
+Login_Group = NodePath("../../..")
+Account_Input = NodePath("Account")
+Password_Input = NodePath("Password")
+
+[node name="AccountLabel" type="Label" parent="LoginGroup/Login/InputGroup/InformationInput" unique_id=152872638]
+layout_mode = 2
+text = "账户"
+
+[node name="Account" type="LineEdit" parent="LoginGroup/Login/InputGroup/InformationInput" unique_id=339763997]
+layout_mode = 2
+placeholder_text = "请输入账户"
+expand_to_text_length = true
+
+[node name="PasswordLabel" type="Label" parent="LoginGroup/Login/InputGroup/InformationInput" unique_id=132980532]
+layout_mode = 2
+text = "密码"
+
+[node name="Password" type="LineEdit" parent="LoginGroup/Login/InputGroup/InformationInput" unique_id=1696503990]
+layout_mode = 2
+placeholder_text = "请输入密码"
+
+[node name="LoginBtn" type="Button" parent="LoginGroup/Login/InputGroup/InformationInput" unique_id=156212146]
+layout_mode = 2
+text = "登录"
+
+[connection signal="pressed" from="ButtonGroup/Login" to="ButtonGroup" method="_on_login_pressed"]
+[connection signal="pressed" from="ButtonGroup/Register" to="ButtonGroup" method="_on_register_pressed"]
+[connection signal="pressed" from="ButtonGroup/ExitGame" to="ButtonGroup" method="_on_exit_game_pressed"]
+[connection signal="pressed" from="LoginGroup/Login/BackMainMenu" to="LoginGroup/Login" method="_on_back_main_menu_pressed"]
+[connection signal="pressed" from="LoginGroup/Login/InputGroup/InformationInput/LoginBtn" to="LoginGroup/Login/InputGroup/InformationInput" method="_on_login_pressed"]

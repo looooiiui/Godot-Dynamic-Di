@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cjsvlnukbgsji"]
+
+[ext_resource type="Script" uid="uid://cj2iux5r4wfra" path="res://00_Engine/LoginSystem/login_system.gd" id="1_q7kt1"]
+[ext_resource type="Script" uid="uid://h812p334t5gi" path="res://00_Engine/LoginSystem/Login/login.gd" id="2_wqntl"]
+[ext_resource type="Script" uid="uid://cil0mcpcfcrun" path="res://00_Engine/LoginSystem/Register/register.gd" id="3_qs54f"]
+
+[node name="LoginSystem" type="Node" unique_id=452179925 node_paths=PackedStringArray("Login", "Register")]
+script = ExtResource("1_q7kt1")
+Login = NodePath("")
+Register = NodePath("")
+
+[node name="Login" type="Node" parent="." unique_id=1932465336]
+script = ExtResource("2_wqntl")
+
+[node name="Register" type="Node" parent="." unique_id=695497866]
+script = ExtResource("3_qs54f")
