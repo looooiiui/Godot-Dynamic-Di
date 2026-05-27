@@ -11,15 +11,15 @@ config_version=5
 [application]
 
 config/name="Godot_Configuration_Table_Injection"
-run/main_scene="uid://cjsvlnukbgsji"
+run/main_scene="uid://d28018x0glyke"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-LoginSystem="*uid://cjsvlnukbgsji"
 InjectionInterface="*uid://t5hr4u4gitfd"
 InjectionLoginSystem="*uid://dj4dloyh707o6"
+InjectionServerSystem="*uid://kr7aycnhj4d3"
 
 [dotnet]
 

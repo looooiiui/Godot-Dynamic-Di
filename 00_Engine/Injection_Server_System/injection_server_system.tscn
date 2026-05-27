@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://kr7aycnhj4d3"]
+
+[ext_resource type="Script" uid="uid://ccb517e771v3m" path="res://00_Engine/Injection_Server_System/injection_server_system.gd" id="1_shmn4"]
+
+[node name="Injection_Server_System" type="Node" unique_id=2028121099]
+script = ExtResource("1_shmn4")

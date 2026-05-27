@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://ddp60rvpeyo5i"]
+
+[ext_resource type="Script" uid="uid://c2or8ccauygbw" path="res://00_Engine/InjectionTable_Engine/MultiplayerOnline/Server/server.gd" id="1_u0pkt"]
+[ext_resource type="Script" uid="uid://if8v75eqy4as" path="res://00_Engine/InjectionTable_Engine/MultiplayerOnline/Server/ServerSide/server_side.gd" id="2_dfbm5"]
+[ext_resource type="Script" uid="uid://c8tb10vpit8ri" path="res://00_Engine/InjectionTable_Engine/MultiplayerOnline/Server/Client/client.gd" id="3_xp6l8"]
+[ext_resource type="PackedScene" uid="uid://c36jv81jqycua" path="res://00_Engine/InjectionTable_Engine/MultiplayerOnline/Server/ServerRunning/server_running.tscn" id="3_xpw3h"]
+[ext_resource type="Script" uid="uid://ccna5xnlomlpw" path="res://00_Engine/InjectionTable_Engine/MultiplayerOnline/Server/GameRunnning/game_running.gd" id="5_rlug7"]
+
+[node name="Server" type="Node" unique_id=586947146 node_paths=PackedStringArray("ServerSide", "Client", "ServerRunning", "GameRunning")]
+script = ExtResource("1_u0pkt")
+ServerSide = NodePath("ServerSide")
+Client = NodePath("Client")
+ServerRunning = NodePath("ServerRunning")
+GameRunning = NodePath("GameRunning")
+
+[node name="ServerSide" type="Node" parent="." unique_id=266560262]
+script = ExtResource("2_dfbm5")
+
+[node name="Client" type="Node" parent="." unique_id=1985101120]
+script = ExtResource("3_xp6l8")
+
+[node name="ServerRunning" parent="." unique_id=1531499244 instance=ExtResource("3_xpw3h")]
+
+[node name="GameRunning" type="Node" parent="." unique_id=1774820716]
+script = ExtResource("5_rlug7")

@@ -3,11 +3,17 @@
 [ext_resource type="Script" uid="uid://bswtb7rukxoxw" path="res://00_Engine/Injection_interface/injection_interface.gd" id="1_tcfqp"]
 [ext_resource type="Script" uid="uid://52y17l8sw2o1" path="res://00_Engine/Injection_interface/Injection_Json_Parsing/injection_json_parsing.gd" id="2_ase24"]
 [ext_resource type="Script" uid="uid://dsf2abss45hc" path="res://00_Engine/Injection_interface/Injection_Normal_Operator/injection_noraml_operator.gd" id="3_ase24"]
+[ext_resource type="Script" uid="uid://cb1b7gs2whhdg" path="res://00_Engine/Injection_interface/Injection_Core_Operation/injection_core_operation.gd" id="4_33r3a"]
 
-[node name="Injection_interface" type="Node" unique_id=1769478609 node_paths=PackedStringArray("Injection_Json_Parsing", "Injection_Noraml_Operator")]
+[node name="Injection_interface" type="Node" unique_id=1769478609 node_paths=PackedStringArray("Injection_Json_Parsing", "Injection_Noraml_Operator", "INJECTIONCORE")]
 script = ExtResource("1_tcfqp")
 Injection_Json_Parsing = NodePath("Injection_Json_Parsing")
 Injection_Noraml_Operator = NodePath("Injection_Noraml_Operator")
+INJECTIONCORE = NodePath("INJECTCORE")
+
+[node name="INJECTCORE" type="Node" parent="." unique_id=1837613059 node_paths=PackedStringArray("Injection_interface_node")]
+script = ExtResource("4_33r3a")
+Injection_interface_node = NodePath("..")
 
 [node name="Injection_Json_Parsing" type="Node" parent="." unique_id=280308631 node_paths=PackedStringArray("Injection_interface_node")]
 script = ExtResource("2_ase24")
@@ -16,3 +22,9 @@ Injection_interface_node = NodePath("..")
 [node name="Injection_Noraml_Operator" type="Node" parent="." unique_id=1879463250 node_paths=PackedStringArray("Injection_interface_node")]
 script = ExtResource("3_ase24")
 Injection_interface_node = NodePath("..")
+
+[node name="Injection_Time_Process" type="Timer" parent="." unique_id=821971973]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="Injection_Time_Process" to="." method="_refresh_injection_info"]

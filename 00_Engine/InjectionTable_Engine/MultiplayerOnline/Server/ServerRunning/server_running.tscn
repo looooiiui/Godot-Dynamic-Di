@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c36jv81jqycua"]
+
+[ext_resource type="Script" uid="uid://bc6nqdj5tqbnm" path="res://00_Engine/InjectionTable_Engine/MultiplayerOnline/Server/ServerRunning/server_running.gd" id="1_elqjm"]
+
+[node name="ServerRunning" type="Node" unique_id=884480137]
+script = ExtResource("1_elqjm")

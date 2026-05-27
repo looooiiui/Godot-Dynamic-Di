@@ -1,10 +1,226 @@
 [gd_scene format=3 uid="uid://bwqbcwn46lr"]
 
-[ext_resource type="Script" uid="uid://egcxfb477l01" path="res://02_Game/System/LoginSystem/login_group.gd" id="1_2j8vf"]
-[ext_resource type="Script" uid="uid://c6i5e7dx6nnvf" path="res://02_Game/System/LoginSystem/ButtonGroup/button_group.gd" id="1_5xwkx"]
-[ext_resource type="Script" uid="uid://bu221psf8wk83" path="res://02_Game/System/LoginSystem/WindowsGroup/login_group.gd" id="2_2j8vf"]
-[ext_resource type="Script" uid="uid://dy4v1l2t0e3iy" path="res://02_Game/System/LoginSystem/WindowsGroup/LoginWindow/login.gd" id="3_edt2w"]
-[ext_resource type="Script" uid="uid://swk6eekm08rm" path="res://02_Game/System/LoginSystem/WindowsGroup/LoginWindow/InputGroup/InformationInput/information_input.gd" id="4_vpxaa"]
+[sub_resource type="GDScript" id="GDScript_8c1t1"]
+script/source = "extends Control
+
+func _ready() -> void:
+	_signal_initialize()
+	
+# 初始化信号连接
+func _signal_initialize() -> void:
+	InjectionLoginSystem.login_success.connect(_on_login_success)
+
+# 连接成功，登录界面系统退出
+func _on_login_success() -> void:
+	queue_free()
+	
+"
+
+[sub_resource type="GDScript" id="GDScript_yx85f"]
+script/source = "extends VBoxContainer
+
+@export var Login_Window		: Window	# 登录界面窗口
+@export var Login_Group			: Control	# 登录UI管理器(LoginGroup)
+
+# 初始化
+func _ready() -> void:
+	_initialize()
+
+# 按下登录按键，向登录UI管理器发送状态更改
+func _on_login_pressed() -> void:
+	Login_Window.visible = true			# 显示窗口
+	Login_Group.change_user_state(0)	# 发送状态更改值为 0，上文已演示API对应代码
+
+# 按下注册按键，向登录UI管理器发送状态更改
+func _on_register_pressed() -> void:
+	Login_Window.visible = true			# 显示窗口
+	Login_Group.change_user_state(1)	# 发送状态更改值为 1，上文已演示API对应代码
+
+# 退出登录系统(这里退出游戏)
+func _on_exit_game_pressed() -> void:
+	get_tree().quit()
+	
+# 初始化
+func _initialize() -> void:
+	# 窗口初始化登录窗口为不可见
+	Login_Window.visible = false
+"
+
+[sub_resource type="GDScript" id="GDScript_k7qpv"]
+script/source = "extends Control
+
+@export var Login_Windows: 		Window	# 子节点，登录注册复用窗口
+@export var Confirm_Button: 	Button	# 子节点，确认登录按钮
+
+# 管理器中存储的当前用户选择的注册或者登录状态，以及先前的注册或者登录状态
+# 枚举状态从全局枚举类获得
+var user_state: GlobalEnum.User_State 			= GlobalEnum.User_State.LOGIN
+var user_per_state: GlobalEnum.User_State 		= GlobalEnum.User_State.REGISTER
+
+# 初始化,函数在下文
+func _ready() -> void:
+	_initialize()
+	
+# 用户操作状态检测
+func _user_operator_detected() -> void:
+	# 仅在用户切换状态的时候触发
+	if (user_state == user_per_state):
+		return
+	
+	# 状态检测
+	match user_state:
+		#  用户处于登录状态，窗口为登录窗口
+		GlobalEnum.User_State.LOGIN:
+			Login_Windows.title = \"登录\"
+			Confirm_Button.text = \"登录\"	
+		#  用户处于注册状态，窗口为注册窗口
+		GlobalEnum.User_State.REGISTER:
+			Login_Windows.title = \"注册\"
+			Confirm_Button.text = \"注册\"	
+			
+	# 更新完后更新用户先前状态与现在一致
+	user_per_state = user_state
+	
+# 执行一次用户状态检测使第一次进入游戏窗口标题为登录
+func _initialize() -> void:
+	# 窗口初始化
+	_user_operator_detected()
+
+\"\"\"
+改变用户状态
+状态 0 登录
+状态 1 注册
+\"\"\"
+# 这里是对两个选择(登录，注册)开放的API接口，用于改变当前用户选择状态
+# 0 表示登录状态, 1 表示注册状态
+# 这里 0 和 1 同样可以换成常量
+func change_user_state(state: int) -> void:
+	match state:
+		0: user_state = GlobalEnum.User_State.LOGIN
+		1: user_state = GlobalEnum.User_State.REGISTER
+	# 更新一次用户选择状态
+	_user_operator_detected() 
+
+# 返回当前用户选择状态
+func get_user_state() -> GlobalEnum.User_State:
+	return user_state
+"
+
+[sub_resource type="GDScript" id="GDScript_15mlo"]
+script/source = "extends Window
+
+func _on_back_main_menu_pressed() -> void:
+	visible = false
+"
+
+[sub_resource type="GDScript" id="GDScript_gyunq"]
+script/source = "extends VBoxContainer
+
+@export var Login_Group:		Control		# 登录UI管理器(LoginGroup)
+@export var Account_Input: 		LineEdit	# 账户单行输入框
+@export var Password_Input: 	LineEdit	# 账户密码单行输入框
+
+var login_success: 		String = \"0\"		# 账号成功状态
+var login_info_issue: 	String = \"1\"		# 账号信息问题状态
+var login_info_error:	String = \"2\"		# 账号无误,验证错误
+
+# 登录提示框大小
+var tip_size: Vector2 = Vector2(400, 200)
+
+# 弹出登录提示
+# 输入参数 (Python验证结果， 是否自定义弹窗内容(默认False)， 自定义弹窗内容(默认空字符串))
+func _general_tip(
+	python_result: String, 
+	is_custom: bool = false, 
+	custom_tip: String = \"\") -> void:
+	
+		
+	# 获取当前玩家选择状态
+	var current_user_state: GlobalEnum.User_State
+	current_user_state = Login_Group.get_user_state()
+
+	# 创建弹窗，并修改弹窗标题大小
+	var login_tip = AcceptDialog.new()
+	login_tip.title = \"登录提示\"
+	login_tip.size = tip_size
+	
+	# 自定义提示
+	if is_custom:
+		# 加入自定义信息
+		login_tip.dialog_text = custom_tip	
+					
+		# 将登录提示加入场景并居中
+		get_tree().current_scene.add_child(login_tip)
+		login_tip.popup_centered()
+		# 自定义提示加入完成后直接完成函数
+		return
+	
+	# 匹配弹出类型(登录或注册)
+	match current_user_state:
+		# 登录状态
+		GlobalEnum.User_State.LOGIN:
+			# 匹配登录状态
+			match python_result:
+				login_success:
+					login_tip.dialog_text = \"登录成功\"
+				login_info_issue:
+					login_tip.dialog_text = \"账号信息不存在\"
+				login_info_error:
+					login_tip.dialog_text = \"密码错误\"
+		# 注册状态
+		GlobalEnum.User_State.REGISTER:
+			# 匹配注册状态
+			match python_result:
+				login_success:
+					login_tip.dialog_text = \"注册成功\"
+				login_info_issue:
+					login_tip.dialog_text = \"注册密码非法或长度小于4(账号长度不能小于3)\"
+				login_info_error:
+					login_tip.dialog_text = \"注册信息已存在\"
+	
+	# 将登录提示加入场景并居中
+	# 注意 login_tip.popup_centered() 一定要先在弹窗加入节点树后再居中
+	# 不然就弹窗由于没加入场景树，执行一次居中后不是在当前场景内居中，再加入场景树后就会居中失败
+	get_tree().current_scene.add_child(login_tip)
+	login_tip.popup_centered()
+
+# 登录按钮被点击，传输登录数据
+func _on_login_pressed() -> void:
+	
+	# 获取当前状态
+	var current_user_state: GlobalEnum.User_State
+	current_user_state = Login_Group.get_user_state()
+	
+	# 获得ID输入信息
+	var input_account_name: 	String 		= Account_Input.text.strip_edges()	# 账户ID
+	var input_account_password: String 		= Password_Input.text.strip_edges()	# 账户密码
+	
+	# 先检查账户的输入是否完全
+	if input_account_name.is_empty() or input_account_password.is_empty():
+		_general_tip(\"0\", true, \"账号或密码不能为空\")
+		Password_Input.clear()
+		return
+		
+	var verify_result
+	# 匹配用户状态
+	match current_user_state:
+		# 登录状态使用登录验证
+		GlobalEnum.User_State.LOGIN:
+			verify_result = InjectionLoginSystem.login_verify(input_account_name, input_account_password)
+		# 注册状态使用注册验证
+		GlobalEnum.User_State.REGISTER:
+			verify_result = InjectionLoginSystem.register_verify(input_account_name, input_account_password)
+	
+	# 输出提示
+	_general_tip(verify_result)
+	# 清除密码输入框
+	Password_Input.clear()
+			
+			
+			
+			
+			
+"
 
 [node name="LoginSystem" type="Control" unique_id=92360582]
 layout_mode = 3
@@ -19,7 +235,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_2j8vf")
+script = SubResource("GDScript_8c1t1")
 
 [node name="ButtonGroup" type="VBoxContainer" parent="." unique_id=1637573368 node_paths=PackedStringArray("Login_Window", "Login_Group")]
 layout_mode = 1
@@ -34,7 +250,7 @@ offset_right = 74.0
 offset_bottom = 44.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_5xwkx")
+script = SubResource("GDScript_yx85f")
 Login_Window = NodePath("../LoginGroup/Login")
 Login_Group = NodePath("../LoginGroup")
 
@@ -54,7 +270,7 @@ text = "退出"
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("2_2j8vf")
+script = SubResource("GDScript_k7qpv")
 Login_Windows = NodePath("Login")
 Confirm_Button = NodePath("Login/InputGroup/InformationInput/LoginBtn")
 
@@ -63,7 +279,7 @@ oversampling_override = 1.0
 title = "登录"
 initial_position = 1
 size = Vector2i(800, 400)
-script = ExtResource("3_edt2w")
+script = SubResource("GDScript_15mlo")
 
 [node name="BackMainMenu" type="Button" parent="LoginGroup/Login" unique_id=2127691612]
 offset_right = 100.0
@@ -97,7 +313,7 @@ offset_right = 74.0
 offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_vpxaa")
+script = SubResource("GDScript_gyunq")
 Login_Group = NodePath("../../..")
 Account_Input = NodePath("Account")
 Password_Input = NodePath("Password")

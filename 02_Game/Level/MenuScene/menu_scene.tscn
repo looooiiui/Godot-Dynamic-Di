@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://coy6mmvqbal6i"]
+
+[ext_resource type="PackedScene" uid="uid://bwqbcwn46lr" path="res://02_Game/System/LoginSystem/login_system.tscn" id="1_6ll26"]
+
+[node name="MenuScene" type="Node" unique_id=154403935]
+
+[node name="LoginSystem" parent="." unique_id=92360582 instance=ExtResource("1_6ll26")]

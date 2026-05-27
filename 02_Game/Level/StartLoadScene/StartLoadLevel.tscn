@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://d28018x0glyke"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_pr08l"]
+
+[node name="StartLoadScene" type="Node2D" unique_id=636220745]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1141237346]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(660, 335)
+scale = Vector2(4574, 2518)
+texture = SubResource("CanvasTexture_pr08l")
