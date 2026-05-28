@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bb6bv047gdbw3"]
+
+[ext_resource type="Script" uid="uid://dndf1srg58ewc" path="res://02_Game/Component/Server/PlayerChatBar/Message/message.gd" id="1_r2nmx"]
+[ext_resource type="PackedScene" uid="uid://bsuhhcbdkt5yg" path="res://02_Game/Component/Server/PlayerChatBar/Message/SingleInformation/single_information.tscn" id="2_e3ohi"]
+
+[node name="PlayerCharBar" type="Control" unique_id=636911949]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Message" type="VBoxContainer" parent="." unique_id=330714181 node_paths=PackedStringArray("Input_Line_Edit")]
+layout_mode = 0
+offset_top = 46.0
+offset_right = 40.0
+offset_bottom = 86.0
+script = ExtResource("1_r2nmx")
+single_message = ExtResource("2_e3ohi")
+Input_Line_Edit = NodePath("InputChat")
+
+[node name="InputChat" type="LineEdit" parent="Message" unique_id=1106157833]
+layout_mode = 2
+placeholder_text = "发送信息"
+
+[node name="MainChat" type="Label" parent="Message" unique_id=16824621]
+layout_mode = 2
+text = "聊天"
+
+[connection signal="text_submitted" from="Message/InputChat" to="Message" method="_on_input_chat_text_submitted"]

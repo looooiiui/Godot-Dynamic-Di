@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cwrgaoibq5i8j"]
+
+[ext_resource type="Script" uid="uid://by8t1dlslnntl" path="res://03_Game/Server/PlayerList/PlayerList/player_list.gd" id="1_atyvx"]
+[ext_resource type="PackedScene" uid="uid://kms37wdg43jk" path="res://03_Game/Server/PlayerList/single_player.tscn" id="2_3drec"]
+
+[node name="PlayerList" type="Control" unique_id=1434962450]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="PlayerList" type="VBoxContainer" parent="." unique_id=1482048657]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_atyvx")
+single_player = ExtResource("2_3drec")
+player_list = null
+
+[node name="ListName" type="Label" parent="PlayerList" unique_id=1669616799]
+layout_mode = 2
+text = "当前玩家列表"

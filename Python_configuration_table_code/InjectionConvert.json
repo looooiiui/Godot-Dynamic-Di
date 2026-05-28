@@ -1,14 +1,14 @@
 {
-    "Server": {
-        "PATH": "D:\\NewWorkProject\\Vscode\\GodotProject\\GodotPythonProject\\Godot_Configuration_Table_Injection\\00_Engine\\InjectionTable_Engine\\MultiplayerOnline\\Server\\server.tscn",
-        "START": true,
-        "EXTRA": false,
-        "AFFILIATED": null
-    },
-    "Login": {
-        "PATH": "D:\\NewWorkProject\\Vscode\\GodotProject\\GodotPythonProject\\Godot_Configuration_Table_Injection\\00_Engine\\InjectionTable_Engine\\LoginSystem\\login_system.tscn",
-        "START": true,
-        "EXTRA": true,
-        "AFFILIATED": "D:\\NewWorkProject\\Vscode\\GodotProject\\GodotPythonProject\\Godot_Configuration_Table_Injection\\00_Engine\\InjectionTable_Engine\\LoginSystem\\Global_Script.gd"
-    }
+	"Server": {
+		"PATH": "D:\\NewWorkProject\\Vscode\\GodotProject\\GodotPythonProject\\Godot_Configuration_Table_Injection\\00_Engine\\InjectionTable_Engine\\MultiplayerOnline\\Server\\server.tscn",
+		"START": true,
+		"EXTRA": false,
+		"AFFILIATED": null
+	},
+	"Login": {
+		"PATH": "D:\\NewWorkProject\\Vscode\\GodotProject\\GodotPythonProject\\Godot_Configuration_Table_Injection\\00_Engine\\InjectionTable_Engine\\LoginSystem\\login_system.tscn",
+		"START": true,
+		"EXTRA": true,
+		"AFFILIATED": "D:\\NewWorkProject\\Vscode\\GodotProject\\GodotPythonProject\\Godot_Configuration_Table_Injection\\00_Engine\\InjectionTable_Engine\\LoginSystem\\Global_Script.gd"
+	}
 }

@@ -17,9 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-InjectionInterface="*uid://t5hr4u4gitfd"
+Server="*uid://kr7aycnhj4d3"
 InjectionLoginSystem="*uid://dj4dloyh707o6"
 InjectionServerSystem="*uid://kr7aycnhj4d3"
+InjectionInterface="*uid://t5hr4u4gitfd"
 
 [dotnet]
 

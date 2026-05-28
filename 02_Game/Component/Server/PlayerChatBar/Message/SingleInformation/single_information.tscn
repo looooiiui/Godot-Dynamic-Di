@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bsuhhcbdkt5yg"]
+
+[ext_resource type="Script" uid="uid://di2ein4k86vdi" path="res://03_Game/Server/PlayerChatBar/Message/SingleInformation/single_information.gd" id="1_1f1cx"]
+
+[node name="SingleInformation" type="Label" unique_id=1215289346]
+offset_right = 41.0
+offset_bottom = 42.0
+script = ExtResource("1_1f1cx")

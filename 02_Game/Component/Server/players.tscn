@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cv23wgaisa0oq"]
+
+[ext_resource type="Script" uid="uid://04c7u8mmd7eo" path="res://02Scenes/MainTestRoot/Players/players.gd" id="1_qteny"]
+[ext_resource type="PackedScene" uid="uid://cmo1q5b620r62" path="res://03_Game/Player/player.tscn" id="2_ha2at"]
+
+[node name="Players" type="Node2D" unique_id=1726442896]
+script = ExtResource("1_qteny")
+PlayerScene = ExtResource("2_ha2at")

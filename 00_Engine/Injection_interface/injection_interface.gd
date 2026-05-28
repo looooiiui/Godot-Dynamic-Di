@@ -62,7 +62,8 @@ static var MODELREGISTERMAP: Dictionary = {
 #==========================================================================#
 
 func load_to_main_scene() -> void:
-	get_tree().change_scene_to_file("res://02_Game/Level/MenuScene/menu_scene.tscn")
+	get_tree().change_scene_to_file("res://02_Game/Component/ServerMenu/ServerUi.tscn")
+	#get_tree().change_scene_to_file("res://02_Game/Level/MenuScene/menu_scene.tscn")
 
 # 获得注入Json获取路径(res://路径)
 func get_injection_json_path() -> String:
