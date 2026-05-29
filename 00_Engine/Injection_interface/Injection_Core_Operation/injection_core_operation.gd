@@ -5,17 +5,20 @@ extends Node
 #=========================模块对应统一键值======================#
 var login_model_key		: String = ""
 var server_model_key	: String = ""
+var ai_model_key		: String = ""
 #============================================================#
 
 #=========================已知需要注入的模块===========================#
 @export var Injection_Login_Packedscene		: PackedScene 	= null
 @export var Injection_Server_Packedscene	: PackedScene 	= null
+@export var Injection_AiModel_Packedscene	: PackedScene	= null
 #===================================================================#
 
 # 初始化模块常量
 func _ready() -> void:
 	login_model_key 	= Injection_interface_node.MATCH_LOGIN_MODEL
 	server_model_key 	= Injection_interface_node.MATCH_SERVER_MODEL
+	ai_model_key		= Injection_interface_node.MATCH_AI_MODEL
 	
 # 启动注入加载(核心正式注入)
 # 传入参数(原注入表, 对照注入表)
@@ -47,7 +50,7 @@ func INJECTION_CORE_TSCN_START(
 	
 	# 首先检查对应注入参数的额外参数(启用状态， 额外附加参数)
 	if not inner_original_injection.is_empty():
-		# 检查未启用直接将地址有效刚刚为无效
+		# 检查未启用直接将地址有效更改为无效
 		for manager_name: String in inner_original_injection:
 			if !inner_original_injection[manager_name].has(START_STATE_NAME):
 				DebugTool.debug_log("注入核心: 在 %s 中检测不到额外启动参数 %s" % [manager_name, START_STATE_NAME])
@@ -78,7 +81,8 @@ func INJECTION_CORE_TSCN_START(
 			
 		var lower_search_name: String = manager_name.to_lower() 
 		
-		# 启动注入匹配
+		#======================启动注入匹配======================#
+		
 		if lower_search_name.contains(login_model_key):
 			# 加载资源
 			var load_model: PackedScene = load(inner_injection_mapping[manager_name][injection_path_index])
@@ -91,6 +95,15 @@ func INJECTION_CORE_TSCN_START(
 			var load_model: PackedScene = load(inner_injection_mapping[manager_name][injection_path_index])
 			var load_instantiation: Node = register_injection(load_model, server_model_key)
 			result_model_dict[server_model_key] = load_instantiation
+			
+		# AI模型匹配注入
+		if lower_search_name.contains(ai_model_key):
+			# 加载资源
+			var load_model: PackedScene = load(inner_injection_mapping[manager_name][injection_path_index])
+			var load_instantiation: Node = register_injection(load_model, ai_model_key)
+			result_model_dict[ai_model_key] = load_instantiation
+			
+		#==================================================================================#		
 	DebugTool.debug_log("注入核心: 注入实例集合: %s" % result_model_dict)		
 	return result_model_dict
 	

@@ -13,13 +13,13 @@ var per_chat_message_list:			Array = []
 func _physics_process(delta: float) -> void:
 	_chat_detection()					# 聊天信息检查，管理
 	_disconnect_clear_dectection()		# 断连聊天栏处理
-	
+		
 # 检测聊天状态并显示
 func _chat_detection()	-> void:
 	
 	# 如果先前缓存的服务器信息和服务器最新信息不一致
-	if (per_chat_message_list != Server.get_player_chat_list()):
-		per_chat_message_list = Server.get_player_chat_list()
+	if (per_chat_message_list != InjectionServerSystem.get_player_chat_list()):
+		per_chat_message_list = InjectionServerSystem.get_player_chat_list()
 
 		# 聊天栏显示消息未满首先实例化单个聊天信息
 		if current_message_num < max_message_num:
@@ -37,13 +37,13 @@ func _chat_detection()	-> void:
 			
 # 这里是接受到 LineEdit(单行输入) 的信号，开始向服务器调用发送消息的信号
 func _on_input_chat_text_submitted(chat_text: String) -> void:
-	Server.send_message(chat_text)
+	InjectionServerSystem.send_message(chat_text)
 	Input_Line_Edit.clear()
 
 # 断连清空聊天栏
 func _disconnect_clear_dectection() -> void:
 	# 连接服务器状态不清空聊天栏
-	if Server.is_connect():
+	if InjectionServerSystem.is_connect():
 		return
 		
 	# 聊天栏为空则不清空
@@ -54,4 +54,6 @@ func _disconnect_clear_dectection() -> void:
 	for massage_label in message_label_list:
 		massage_label.queue_free()
 	message_label_list.clear()
+	# 清空聊天信息
+	current_message_num = 0
 		

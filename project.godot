@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Server="*uid://kr7aycnhj4d3"
+InjectionAiModelPackedscene="*uid://cng8063vqninb"
 InjectionLoginSystem="*uid://dj4dloyh707o6"
 InjectionServerSystem="*uid://kr7aycnhj4d3"
 InjectionInterface="*uid://t5hr4u4gitfd"

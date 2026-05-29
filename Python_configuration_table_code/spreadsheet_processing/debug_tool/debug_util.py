@@ -1,6 +1,6 @@
 class DebugTool:
     #====允许调试信息(防止 print() 输出到Godot捕获参数列表)====#
-    DEBUG = False
+    DEBUG = True
     
     # 调试信息输出
     @staticmethod

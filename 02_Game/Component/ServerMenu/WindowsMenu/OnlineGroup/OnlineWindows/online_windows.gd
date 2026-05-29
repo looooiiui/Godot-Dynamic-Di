@@ -10,15 +10,15 @@ func _on_start_pressed() -> void:
 	visible = true
 
 #创建服务器
-func _on_create_server_pressed() -> void:		
-	if Server.alreadyCreateClient:
+func _on_create_InjectionServerSystem_pressed() -> void:		
+	if InjectionServerSystem.alreadyCreateClient:
 		return
 	Host_Windows.visible = true
-	Server.create_serve()
+	InjectionServerSystem.create_serve()
 
 #加入游戏
-func _on_join_server_pressed() -> void:
-	if Server.alreadyCreateServe:
+func _on_join_InjectionServerSystem_pressed() -> void:
+	if InjectionServerSystem.alreadyCreateServe:
 		return
 	Join_Windows.visible = true
-	Server.create_client()
+	InjectionServerSystem.create_client()

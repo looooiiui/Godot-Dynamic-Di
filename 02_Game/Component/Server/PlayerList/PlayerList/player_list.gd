@@ -10,13 +10,15 @@ func _physics_process(delta: float) -> void:
 	
 #获取网络玩家列表数据	
 func _get_server_player_list()			-> void:
-	player_list = Server.ServerRunning.player_list
+	player_list = InjectionServerSystem.ServerRunning.player_list
 	print(player_list)
 	
 #同步网络玩家数据
 func _sync_with_player_list() 			-> void:
-	if player_list != Server.get_player_list():
-		player_list = Server.get_player_list()
+	if player_list != InjectionServerSystem.get_player_list():
+		player_list = InjectionServerSystem.get_player_list()
+	else:
+		return
 	
 	#刷新玩家列表
 	for single_player_instantion in PlayerList:

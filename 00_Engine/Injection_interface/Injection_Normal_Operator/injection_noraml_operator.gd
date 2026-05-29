@@ -5,6 +5,7 @@ extends Node
 #=========================模块对应统一键值======================#
 var login_model_key		: String = ""
 var server_model_key	: String = ""
+var ai_model_key		: String = ""
 #============================================================#
 
 """
@@ -21,7 +22,8 @@ var server_model_key	: String = ""
 func _ready() -> void:
 	login_model_key 	= Injection_interface_node.MATCH_LOGIN_MODEL
 	server_model_key 	= Injection_interface_node.MATCH_SERVER_MODEL
-
+	ai_model_key		= Injection_interface_node.MATCH_AI_MODEL
+	
 # 启动一次注入
 func injection_start(start_up_param: int = 0):
 	var return_result: Array = []
@@ -94,6 +96,9 @@ func injection_mapping(injection_dict: Dictionary, path_head_name: String = "PAT
 		elif (search_name.contains(server_model_key)) and not matched.has(server_model_key):	
 			result_dict[manager_name] = [InjectionServerSystem]
 			matched[server_model_key] = true
+		elif (search_name.contains(ai_model_key)) and not matched.has(ai_model_key):	
+			result_dict[manager_name] = [InjectionAiModelPackedscene]
+			matched[ai_model_key] = true
 		
 	# 根据映射将地址映入
 	for manager_name: String in result_dict:

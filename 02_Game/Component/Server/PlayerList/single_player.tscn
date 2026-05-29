@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://kms37wdg43jk"]
 
-[ext_resource type="Script" uid="uid://cbkd0mfojdftw" path="res://03_Game/Server/PlayerList/single_player.gd" id="1_c87hl"]
+[ext_resource type="Script" uid="uid://cbkd0mfojdftw" path="res://02_Game/Component/Server/PlayerList/single_player.gd" id="1_c87hl"]
 
 [node name="SinglePlayer" type="Label" unique_id=1553090427]
 offset_right = 41.0

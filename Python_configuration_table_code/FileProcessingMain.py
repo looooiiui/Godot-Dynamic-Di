@@ -1,6 +1,7 @@
-from pathlib import Path                                            # 路径工具
 import sys                                                          # Python环境工具
-
+from typing import Optional                                         # 引入类型标注工具 
+from pathlib import Path   
+                                         # 路径工具
 # 项目根目录
 ROOT_DIR = Path(__file__).parent
 # 子模块目录 spreadsheet_processing 文件夹
@@ -35,8 +36,8 @@ START_EXCEL_CONVERT_JSON:   str = "0"
 
 
 #======================默认接收全局变量===========================#
-receive_param : str          = "0"          # 程序运行参数
-receive_excel : ExcelManager = None         # 程序Excel管理器
+receive_param : str          = "0"              # 程序运行参数
+receive_excel : Optional[ExcelManager] = None   # 程序Excel管理器
 #===============================================================#
 
 
@@ -74,6 +75,7 @@ def injection_convert_json() -> None:
     
     # 转换Excel数据为Json
     sheet = receive_excel.get_sheet("InjectionTable")
+
     convert_dict: dict = ExcelFormatConversion.convert_injection_dict(sheet)
 
     JsonProcessing.convert_dir_to_json(convert_dict, DEFAULT_JSON_PATH)  
@@ -111,7 +113,7 @@ if __name__ == "__main__":
         DebugTool.debug_log(f"主程序: 程序运行异常：{str(e)}")
         sys.exit()
 
-        
+    # 关闭Excel
     finally:
         if receive_excel is not None:
             receive_excel.close_workbook()

@@ -55,9 +55,11 @@ var injection_mapping_dict: Dictionary 	= {}		# 注入字典映射游戏内管�
 #===============================模块常值匹配表===============================#
 static var MATCH_LOGIN_MODEL		: String 	= "login"
 static var MATCH_SERVER_MODEL		: String 	= "server"
+static var MATCH_AI_MODEL			: String	= "aimodel"
 static var MODELREGISTERMAP: Dictionary = {
 	MATCH_LOGIN_MODEL	: InjectionLoginSystem, 
-	MATCH_SERVER_MODEL	: InjectionServerSystem
+	MATCH_SERVER_MODEL	: InjectionServerSystem,
+	MATCH_AI_MODEL		: InjectionAiModelPackedscene
 	}
 #==========================================================================#
 
@@ -118,7 +120,8 @@ func _initialize_global_data() -> void:
 	MATCH_SERVER_MODEL	= "server"
 	MODELREGISTERMAP = {
 	MATCH_LOGIN_MODEL	: InjectionLoginSystem, 
-	MATCH_SERVER_MODEL	: InjectionServerSystem
+	MATCH_SERVER_MODEL	: InjectionServerSystem,
+	MATCH_AI_MODEL		: InjectionAiModelPackedscene
 	}
 
 # 发射状态刷新信号

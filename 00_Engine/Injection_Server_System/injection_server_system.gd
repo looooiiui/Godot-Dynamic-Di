@@ -15,6 +15,8 @@ func _ready() -> void:
 		await get_tree().create_timer(0.2).timeout
 		
 func _on_connect_updata() -> void:
+	if SystemInstantiation == null:
+		return
 	alreadyCreateServe 		= SystemInstantiation.alreadyCreateServe
 	alreadyCreateClient 	= SystemInstantiation.alreadyCreateClient
 	

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cng8063vqninb"]
+
+[ext_resource type="Script" uid="uid://bq0trj88etxk8" path="res://00_Engine/Injection_AiModel_Packedscene/injection_ai_model_packedscene.gd" id="1_57xv7"]
+
+[node name="Injection_AiModel_Packedscene" type="Node" unique_id=2109114242]
+script = ExtResource("1_57xv7")

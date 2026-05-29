@@ -13,7 +13,7 @@ var alreadyCreateClient: bool		= false
 func _ready() -> void:
 	#这里接收所有子管理器信号as
 	_signal_initialize()
-	
+
 #创建服务端
 func create_serve() -> void:
 	# 只启动服务端或者客户端

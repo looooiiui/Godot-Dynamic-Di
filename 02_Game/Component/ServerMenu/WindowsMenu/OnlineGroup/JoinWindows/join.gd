@@ -40,5 +40,5 @@ func _search_state(delta: float) -> void:
 		Search_Label.text = "已连接服务器"
 
 func _on_exit_pressed() -> void:
-	Server.close_client()
+	InjectionServerSystem.close_client()
 	visible = false

@@ -11,9 +11,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_exit_pressed() -> void:
-	Server.close_serve()
+	InjectionServerSystem.close_serve()
 	visible = false
 
 
 func _on_start_game_pressed() -> void:
-	Server.change_all_scene("res://02Scenes/MainTestRoot/multiplayer.tscn")
+	InjectionServerSystem.change_all_scene("res://02Scenes/MainTestRoot/multiplayer.tscn")
